@@ -11,7 +11,7 @@ html, body {
   font-family: Arial;
 }
 
-/* 🔹 Intro Screen */
+/* Intro Screen */
 #intro {
   position: fixed;
   width: 100%;
@@ -33,13 +33,12 @@ html, body {
   box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
-/* 🔹 Main Screen */
+/* Main Screen */
 #main {
   display: none;
   height: 100%;
   width: 100%;
   background-color: #ffb6c1;
-  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -50,9 +49,22 @@ html, body {
   align-items: center;
 }
 
+/* Typewriter text */
 h1 {
   color: red;
   margin-bottom: 40px;
+  border-right: 3px solid red;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* blinking cursor */
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.typing {
+  animation: blink 1s infinite;
 }
 
 button {
@@ -63,7 +75,7 @@ button {
   cursor: pointer;
 }
 
-/* 🎊 Confetti */
+/* Confetti */
 .confetti {
   position: fixed;
   top: -20px;
@@ -85,43 +97,62 @@ button {
 
 <body>
 
-<!-- 🔹 Intro Screen -->
+<!-- Intro -->
 <div id="intro">
   <button id="startBtn">➜</button>
 </div>
 
-<!-- 🔹 Main Screen -->
+<!-- Main -->
 <div id="main">
   <div class="container">
-    <h1>Happy Birthday Mele Panda 🎂❤️</h1>
+    <h1 id="title"></h1>
     <button onclick="showMessage()">Click Me ❤️</button>
     <p id="msg"></p>
   </div>
 </div>
 
-<!-- 🎶 Music -->
+<!-- Music -->
 <audio id="music" loop>
   <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// 🎯 Start button click
+const text = "Happy Birthday Mele Panda 🎂❤️";
+let index = 0;
+
+// Start button
 document.getElementById("startBtn").onclick = function() {
   document.getElementById("intro").style.display = "none";
   document.getElementById("main").style.display = "flex";
 
-  // play music
   document.getElementById("music").play();
-
+  startTyping();
   startConfetti();
 };
 
-// Message button
+// Typewriter effect
+function startTyping() {
+  let title = document.getElementById("title");
+  title.classList.add("typing");
+
+  function type() {
+    if (index < text.length) {
+      title.innerHTML += text.charAt(index);
+      index++;
+      setTimeout(type, 80); // speed control
+    } else {
+      title.classList.remove("typing");
+    }
+  }
+  type();
+}
+
+// Message
 function showMessage() {
   document.getElementById("msg").innerHTML = "I love you forever 💕";
 }
 
-// 🎊 Confetti system
+// Confetti
 const colors = ["red", "blue", "green", "yellow"];
 
 function createConfetti() {
