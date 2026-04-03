@@ -25,7 +25,6 @@ html, body {
 
 #intro { display: flex; }
 
-/* Button */
 .btn {
   font-size: 6vw;
   padding: 4vw 8vw;
@@ -47,7 +46,6 @@ html, body {
   transform: translateY(4px);
 }
 
-/* Text */
 .text {
   display: inline-block;
   font-size: 5.5vw;
@@ -57,7 +55,7 @@ html, body {
   line-height: 1.4;
 }
 
-/* Cursor FIX */
+/* Cursor (only final screen) */
 .cursor {
   border-right: 2px solid red;
   animation: blink 1s infinite;
@@ -100,12 +98,12 @@ html, body {
 
 <script>
 
-// Click sound
 function playClick() {
+  document.getElementById("clickSound").currentTime = 0;
   document.getElementById("clickSound").play();
 }
 
-// Navigation
+// Screen change
 function goToLetter() {
   playClick();
   document.getElementById("intro").style.display = "none";
@@ -115,18 +113,23 @@ function goToLetter() {
   typeLetter();
 }
 
+// ✅ FIX: sound added here
 function goToFinal() {
+  playClick();
   document.getElementById("letter").style.display = "none";
   document.getElementById("final").style.display = "flex";
 
   typeFinal();
 }
 
-// 🔥 PERFECT TYPEWRITER
-function typeText(element, text, speed, callback) {
+// typing
+function typeText(element, text, speed, useCursor, callback) {
   let i = 0;
   element.innerHTML = "";
-  element.classList.add("cursor");
+
+  if (useCursor) {
+    element.classList.add("cursor");
+  }
 
   function typing() {
     if (i <= text.length) {
@@ -143,19 +146,19 @@ function typeText(element, text, speed, callback) {
   typing();
 }
 
-// Love letter
+// Love letter (no cursor)
 function typeLetter() {
   const text = "Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
 
-  typeText(document.getElementById("letterText"), text, 35, () => {
+  typeText(document.getElementById("letterText"), text, 35, false, () => {
     document.getElementById("nextBtn").classList.add("showBtn");
   });
 }
 
-// Final
+// Final screen (with cursor)
 function typeFinal() {
-  typeText(document.getElementById("line1"), "Happy Birthday 🎂", 80, () => {
-    typeText(document.getElementById("line2"), "Mele Panda 🫂💖", 80);
+  typeText(document.getElementById("line1"), "Happy Birthday 🎂", 80, true, () => {
+    typeText(document.getElementById("line2"), "Mele Panda 🫂💖", 80, true);
   });
 }
 
