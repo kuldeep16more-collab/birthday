@@ -13,6 +13,7 @@ html, body {
   background: #ffb6c1;
 }
 
+/* Screens */
 .screen {
   display: none;
   position: fixed;
@@ -28,6 +29,7 @@ html, body {
 
 #intro { display: flex; }
 
+/* Button */
 .btn {
   font-size: 6vw;
   padding: 4vw 8vw;
@@ -48,6 +50,7 @@ html, body {
   transform: translateY(4px);
 }
 
+/* Text */
 .text {
   font-size: 5.5vw;
   max-width: 90%;
@@ -55,6 +58,7 @@ html, body {
   margin-bottom: 20px;
 }
 
+/* Cursor */
 .cursor {
   border-right: 2px solid red;
   animation: blink 1s infinite;
@@ -64,18 +68,19 @@ html, body {
   50% { border-color: transparent; }
 }
 
-/* Hearts */
+/* ❤️ HEARTS */
 .heart {
   position: fixed;
   bottom: -10px;
   animation: floatUp 6s linear infinite;
 }
+
 @keyframes floatUp {
   0% { transform: translateY(0); opacity:1; }
   100% { transform: translateY(-100vh); opacity:0; }
 }
 
-/* 🎂 Cake */
+/* 🎂 NEW CAKE CSS (ADDED ONLY) */
 .cake {
   font-size: 20vw;
   position: relative;
@@ -88,11 +93,7 @@ html, body {
   cursor: pointer;
 }
 
-.flame {
-  color: orange;
-}
-
-/* Sprinkles */
+/* sprinkles */
 .sprinkle {
   position: fixed;
   width: 6px;
@@ -109,44 +110,51 @@ html, body {
 
 <body>
 
+<!-- Screen 1 -->
 <div id="intro" class="screen">
   <button class="btn" style="opacity:1" onclick="goToLetter()">Press ❤️</button>
 </div>
 
+<!-- Screen 2 -->
 <div id="letter" class="screen">
   <div id="letterText" class="text"></div>
   <button id="btn2" class="btn" onclick="goToMemories()">Press ❤️</button>
 </div>
 
+<!-- Screen 3 -->
 <div id="memory" class="screen">
   <div id="memoryText" class="text"></div>
   <button id="btn3" class="btn" onclick="goToFinal()">Press ❤️</button>
 </div>
 
+<!-- Screen 4 -->
 <div id="final" class="screen">
   <div id="line1" class="text"></div>
   <div id="line2" class="text"></div>
   <button id="btn4" class="btn" onclick="goToEnd()">One Last Thing ❤️</button>
 </div>
 
-<!-- END -->
+<!-- Screen 5 -->
 <div id="end" class="screen">
   <div id="endText" class="text"></div>
-  <button id="btn5" class="btn" onclick="goToMagic()">Jaaduu ✨</button>
+  <!-- ✅ ONLY THIS BUTTON ADDED -->
+  <button id="btn5" class="btn showBtn" onclick="goToMagic()">Jaaduu ✨</button>
 </div>
 
-<!-- 🎂 JAADUU SCREEN -->
+<!-- 🎂 NEW SCREEN (ADDED ONLY) -->
 <div id="magic" class="screen">
   <div class="cake">🎂
     <div class="candle" style="left:30%" onclick="blow(this)">🕯️</div>
     <div class="candle" style="left:50%" onclick="blow(this)">🕯️</div>
     <div class="candle" style="left:70%" onclick="blow(this)">🕯️</div>
   </div>
+
   <div class="text">tap on candles to blow</div>
 </div>
 
+<!-- Sounds -->
 <audio id="music" loop>
-  <source src="birthday.mp3">
+  <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
 <audio id="click">
@@ -155,12 +163,14 @@ html, body {
 
 <script>
 
+// sound
 function clickSound(){
   let s=document.getElementById("click");
   s.currentTime=0;
   s.play();
 }
 
+// navigation
 function switchScreen(hide,show){
   document.getElementById(hide).style.display="none";
   document.getElementById(show).style.display="flex";
@@ -169,7 +179,7 @@ function switchScreen(hide,show){
 function goToLetter(){
   clickSound();
   switchScreen("intro","letter");
-  music.play();
+  document.getElementById("music").play();
   typeLetter();
 }
 
@@ -191,12 +201,14 @@ function goToEnd(){
   typeEnd();
 }
 
+/* ✅ NEW NAVIGATION FUNCTION */
 function goToMagic(){
   clickSound();
   switchScreen("end","magic");
   startSprinkles();
 }
 
+// typing
 function typeText(el,text,speed,cursor,cb){
   let i=0;
   el.innerHTML="";
@@ -216,26 +228,41 @@ function typeText(el,text,speed,cursor,cb){
   t();
 }
 
+// 💌 LOVE LETTER
 function typeLetter(){
-typeText(letterText,"Tu meri duniya hai ❤️",35,false,()=>btn2.classList.add("showBtn"));
+startHearts();
+let text="Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
+
+typeText(letterText,text,35,false,()=>{btn2.classList.add("showBtn");});
 }
 
+// 💭 MEMORY
 function typeMemories(){
-typeText(memoryText,"Teri yaadein sabse special hai 💖",35,false,()=>btn3.classList.add("showBtn"));
+startHearts();
+let text="Har moment jo tere saath spend kiya hai na... wo mere liye treasure hai.\nTere saath rehna, tere sath roz baatein karna sab kuch special hai.\nTu mere life ka sabse important part hai 💖";
+
+typeText(memoryText,text,35,false,()=>{btn3.classList.add("showBtn");});
 }
 
+// 🎉 FINAL
 function typeFinal(){
+startHearts();
 typeText(line1,"Happy Birthday 🎂",80,true,()=>{
-typeText(line2,"Mele Panda 🫂💖",80,true,()=>btn4.classList.add("showBtn"));
+typeText(line2,"Mele Panda 🫂💖",80,true,()=>{
+btn4.classList.add("showBtn");
+});
 });
 }
 
+// 💖 END + HEARTS
 function typeEnd(){
-typeText(endText,"I Love You Forever ❤️",60,true,()=>btn5.classList.add("showBtn"));
+let text="I Love You So Much ❤️\nTu meri life ka sabse important part hai.\nMain bas itna chahta hu ki tu hamesha smile karti rahe.\nMain hamesha tere saath rahunga.\nyou are my forever 💖";
+
+typeText(endText,text,60,true);
 startHearts();
 }
 
-/* ❤️ hearts */
+// ❤️ HEARTS FUNCTION
 function startHearts(){
 setInterval(()=>{
 let h=document.createElement("div");
@@ -248,12 +275,12 @@ setTimeout(()=>h.remove(),6000);
 },300);
 }
 
-/* 🎂 blow candles */
+/* 🎂 CANDLE BLOW */
 function blow(el){
-  el.innerHTML=""; // remove candle
+  el.innerHTML="";
 }
 
-/* sprinkles */
+/* 🎊 SPRINKLES */
 function startSprinkles(){
 setInterval(()=>{
 let s=document.createElement("div");
