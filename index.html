@@ -48,6 +48,7 @@ html, body {
   margin-bottom: 40px;
 }
 
+/* Cursor */
 .cursor {
   border-right: 2px solid red;
   animation: blink 1s infinite;
@@ -78,26 +79,24 @@ html, body {
   <div id="line2" class="text"></div>
 </div>
 
-<!-- 🎶 Music -->
+<!-- Music -->
 <audio id="bgMusic" loop>
   <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
-<!-- 🔊 Click Sound -->
+<!-- Click -->
 <audio id="clickSound">
   <source src="click.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-// click sound
 function playClick() {
   document.getElementById("clickSound").play();
 }
 
-// Screen change
 function goToLetter() {
-  playClick(); // ✔️ only here
+  playClick();
   document.getElementById("intro").style.display = "none";
   document.getElementById("letter").style.display = "flex";
 
@@ -105,7 +104,6 @@ function goToLetter() {
   typeLetter();
 }
 
-// ❌ NO click sound here
 function goToFinal() {
   document.getElementById("letter").style.display = "none";
   document.getElementById("final").style.display = "flex";
@@ -113,7 +111,7 @@ function goToFinal() {
   typeFinal();
 }
 
-// typing
+// 🔥 FIXED TYPE FUNCTION
 function typeText(element, text, speed, callback) {
   let i = 0;
   element.classList.add("cursor");
@@ -124,21 +122,24 @@ function typeText(element, text, speed, callback) {
       i++;
       setTimeout(typing, speed);
     } else {
+      // 👉 cursor completely remove
       element.classList.remove("cursor");
+      element.style.borderRight = "none";
+
       if (callback) callback();
     }
   }
   typing();
 }
 
-// love letter
+// Love letter
 function typeLetter() {
   const text = "Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
 
   typeText(document.getElementById("letterText"), text, 35);
 }
 
-// final text
+// Final screen
 function typeFinal() {
   typeText(document.getElementById("line1"), "Happy Birthday 🎂", 80, () => {
     typeText(document.getElementById("line2"), "Mele Panda 🫂💖", 80);
