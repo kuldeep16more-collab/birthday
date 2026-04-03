@@ -93,6 +93,34 @@ html, body {
   0% { transform: translateY(-10vh) rotate(0deg); }
   100% { transform: translateY(100vh) rotate(360deg); }
 }
+
+/* 💨 SMOKE */
+.smoke {
+  position: absolute;
+  font-size: 5vw;
+  animation: smokeUp 1.5s ease-out forwards;
+}
+
+@keyframes smokeUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
+
+/* 🎉 WISH POPUP */
+.wish {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 7vw;
+  color: white;
+  animation: pop 1s ease;
+}
+
+@keyframes pop {
+  0% { transform: translate(-50%, -50%) scale(0); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
 </style>
 </head>
 
@@ -126,7 +154,6 @@ html, body {
 <!-- 🔥 MAGIC SCREEN -->
 <div id="magic" class="screen">
 
-  <!-- triangle candles -->
   <div>
     <div class="candle" onclick="blow(this)">🕯️</div>
   </div>
@@ -150,6 +177,7 @@ html, body {
 <script>
 
 let heartInterval;
+let candlesLeft = 3;
 
 function clickSound(){
   let s=document.getElementById("click");
@@ -230,7 +258,6 @@ typeText(memoryText,text,35,false,()=>{btn3.classList.add("showBtn");});
 
 function typeFinal(){
 startHearts();
-/* ❌ cursor removed */
 typeText(line1,"Happy Birthday 🎂",80,false,()=>{
 typeText(line2,"Mele Panda 🫂💖",80,false,()=>{
 btn4.classList.add("showBtn");
@@ -263,10 +290,31 @@ function stopHearts(){
   heartInterval = null;
 }
 
+// 🔥 candle blow + smoke
 function blow(el){
-  el.innerHTML="";
+  el.innerHTML = "";
+
+  let smoke = document.createElement("div");
+  smoke.className = "smoke";
+  smoke.innerHTML = "💨";
+  el.appendChild(smoke);
+
+  candlesLeft--;
+
+  if(candlesLeft === 0){
+    showWish();
+  }
 }
 
+// 🎉 wish popup
+function showWish(){
+  let w = document.createElement("div");
+  w.className = "wish";
+  w.innerHTML = "✨ Wish Complete 🎂❤️";
+  document.body.appendChild(w);
+}
+
+// 🎊 sprinkles
 function startSprinkles(){
 setInterval(()=>{
 let s=document.createElement("div");
