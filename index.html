@@ -33,7 +33,13 @@ html, body {
   background: white;
   cursor: pointer;
   box-shadow: 0 6px #999;
-  transition: all 0.1s;
+  transition: all 0.2s;
+  opacity: 0; /* 👈 hidden initially */
+}
+
+/* show animation */
+.showBtn {
+  opacity: 1;
 }
 
 .btn:active {
@@ -48,7 +54,6 @@ html, body {
   margin-bottom: 40px;
 }
 
-/* Cursor */
 .cursor {
   border-right: 2px solid red;
   animation: blink 1s infinite;
@@ -64,13 +69,13 @@ html, body {
 
 <!-- Screen 1 -->
 <div id="intro" class="screen">
-  <button class="btn" onclick="goToLetter()">Press ❤️</button>
+  <button class="btn" style="opacity:1" onclick="goToLetter()">Press ❤️</button>
 </div>
 
 <!-- Screen 2 -->
 <div id="letter" class="screen">
   <div id="letterText" class="text"></div>
-  <button class="btn" onclick="goToFinal()">Press ❤️</button>
+  <button id="nextBtn" class="btn" onclick="goToFinal()">Press ❤️</button>
 </div>
 
 <!-- Screen 3 -->
@@ -111,7 +116,7 @@ function goToFinal() {
   typeFinal();
 }
 
-// 🔥 FIXED TYPE FUNCTION
+// typing function
 function typeText(element, text, speed, callback) {
   let i = 0;
   element.classList.add("cursor");
@@ -122,7 +127,6 @@ function typeText(element, text, speed, callback) {
       i++;
       setTimeout(typing, speed);
     } else {
-      // 👉 cursor completely remove
       element.classList.remove("cursor");
       element.style.borderRight = "none";
 
@@ -132,14 +136,17 @@ function typeText(element, text, speed, callback) {
   typing();
 }
 
-// Love letter
+// love letter
 function typeLetter() {
   const text = "Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
 
-  typeText(document.getElementById("letterText"), text, 35);
+  typeText(document.getElementById("letterText"), text, 35, () => {
+    // 👉 show button AFTER typing
+    document.getElementById("nextBtn").classList.add("showBtn");
+  });
 }
 
-// Final screen
+// final
 function typeFinal() {
   typeText(document.getElementById("line1"), "Happy Birthday 🎂", 80, () => {
     typeText(document.getElementById("line2"), "Mele Panda 🫂💖", 80);
