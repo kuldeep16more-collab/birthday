@@ -65,16 +65,14 @@ button {
   <p id="msg"></p>
 </div>
 
-<!-- 🎶 Music -->
+<!-- 🎶 LOCAL MUSIC -->
 <audio id="music" loop>
-  <source src="https://www.soundjay.com/human/sounds/happy-birthday-song-01.mp3" type="audio/mpeg">
+  <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 function startAll() {
   document.getElementById("msg").innerHTML = "I love you forever 💕";
-  
-  // 🎶 Play music
   document.getElementById("music").play();
 }
 
@@ -97,12 +95,9 @@ function createConfetti() {
 
   document.body.appendChild(c);
 
-  setTimeout(() => {
-    c.remove();
-  }, duration * 1000);
+  setTimeout(() => c.remove(), duration * 1000);
 }
 
-// continuous confetti
 setInterval(() => {
   for (let i = 0; i < 5; i++) {
     createConfetti();
