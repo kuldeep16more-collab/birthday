@@ -13,6 +13,7 @@ html, body {
   background: #ffb6c1;
 }
 
+/* Screens */
 .screen {
   display: none;
   position: fixed;
@@ -67,50 +68,52 @@ html, body {
   50% { border-color: transparent; }
 }
 
-/* 🎆 FIREWORKS */
-.firework {
+/* ❤️ HEARTS */
+.heart {
   position: fixed;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  animation: explode 1s ease-out forwards;
+  bottom: -10px;
+  animation: floatUp 6s linear infinite;
 }
 
-@keyframes explode {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(15);
-    opacity: 0;
-  }
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity:1; }
+  100% { transform: translateY(-100vh); opacity:0; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- Screen 1 -->
 <div id="intro" class="screen">
   <button class="btn" style="opacity:1" onclick="goToLetter()">Press ❤️</button>
 </div>
 
+<!-- Screen 2 -->
 <div id="letter" class="screen">
   <div id="letterText" class="text"></div>
   <button id="btn2" class="btn" onclick="goToMemories()">Press ❤️</button>
 </div>
 
+<!-- Screen 3 -->
 <div id="memory" class="screen">
   <div id="memoryText" class="text"></div>
   <button id="btn3" class="btn" onclick="goToFinal()">Press ❤️</button>
 </div>
 
-<!-- 🎉 FINAL SCREEN -->
+<!-- Screen 4 -->
 <div id="final" class="screen">
   <div id="line1" class="text"></div>
   <div id="line2" class="text"></div>
+  <button id="btn4" class="btn" onclick="goToEnd()">One Last Thing ❤️</button>
 </div>
 
+<!-- Screen 5 (ENDING BACK) -->
+<div id="end" class="screen">
+  <div id="endText" class="text"></div>
+</div>
+
+<!-- Sounds -->
 <audio id="music" loop>
   <source src="birthday.mp3" type="audio/mpeg">
 </audio>
@@ -121,12 +124,14 @@ html, body {
 
 <script>
 
+// sound
 function clickSound(){
   let s=document.getElementById("click");
   s.currentTime=0;
   s.play();
 }
 
+// navigation
 function switchScreen(hide,show){
   document.getElementById(hide).style.display="none";
   document.getElementById(show).style.display="flex";
@@ -149,7 +154,12 @@ function goToFinal(){
   clickSound();
   switchScreen("memory","final");
   typeFinal();
-  startFireworks(); // 🎆 start here
+}
+
+function goToEnd(){
+  clickSound();
+  switchScreen("final","end");
+  typeEnd();
 }
 
 // typing
@@ -172,36 +182,48 @@ function typeText(el,text,speed,cursor,cb){
   t();
 }
 
+// 💌 LOVE LETTER
 function typeLetter(){
 let text="Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
 
 typeText(letterText,text,35,false,()=>{btn2.classList.add("showBtn");});
 }
 
+// 💭 MEMORY
 function typeMemories(){
 let text="Har moment jo tere saath spend kiya hai na... wo mere liye treasure hai.\nTere saath hasi, baatein sab kuch special hai.\nTu mere life ka sabse important part hai 💖";
 
 typeText(memoryText,text,35,false,()=>{btn3.classList.add("showBtn");});
 }
 
+// 🎉 FINAL
 function typeFinal(){
 typeText(line1,"Happy Birthday 🎂",80,true,()=>{
-typeText(line2,"Mele Panda 🫂💖",80,true);
+typeText(line2,"Mele Panda 🫂💖",80,true,()=>{
+btn4.classList.add("showBtn");
+});
 });
 }
 
-// 🎆 FIREWORKS FUNCTION
-function startFireworks(){
-  setInterval(()=>{
-    let f=document.createElement("div");
-    f.className="firework";
-    f.style.left=Math.random()*100+"vw";
-    f.style.top=Math.random()*100+"vh";
-    f.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    document.body.appendChild(f);
+// 💖 END + HEARTS
+function typeEnd(){
+let text="I Love You So Much ❤️\nTu meri life ka sabse important part hai.\nMain bas itna chahta hu ki tu hamesha smile karti rahe.\nMain hamesha tere saath rahunga.\nTu meri forever hai 💖";
 
-    setTimeout(()=>f.remove(),1000);
-  },300);
+typeText(endText,text,60,true);
+startHearts();
+}
+
+// ❤️ HEARTS FUNCTION
+function startHearts(){
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(15+Math.random()*25)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
+},300);
 }
 
 </script>
