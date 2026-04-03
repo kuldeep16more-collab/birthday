@@ -7,6 +7,7 @@
 html, body {
   height: 100%;
   margin: 0;
+  overflow: hidden;
 }
 
 body {
@@ -17,6 +18,7 @@ body {
   font-family: Arial;
 }
 
+/* Center content */
 .container {
   display: flex;
   flex-direction: column;
@@ -36,6 +38,23 @@ button {
   cursor: pointer;
   margin-top: 10px;
 }
+
+/* Sprinkles */
+.sprinkle {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+  }
+}
 </style>
 
 </head>
@@ -48,9 +67,25 @@ button {
   <p id="msg"></p>
 </div>
 
+<!-- Music -->
+<audio autoplay loop>
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid" type="audio/midi">
+</audio>
+
 <script>
+// Message
 function showMessage() {
   document.getElementById("msg").innerHTML = "I love you forever 💕";
+}
+
+// Sprinkles generate
+for (let i = 0; i < 50; i++) {
+  let s = document.createElement("div");
+  s.className = "sprinkle";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDuration = (3 + Math.random() * 5) + "s";
+  s.style.opacity = Math.random();
+  document.body.appendChild(s);
 }
 </script>
 
