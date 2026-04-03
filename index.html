@@ -13,7 +13,6 @@ html, body {
   background-color: #ffb6c1;
 }
 
-/* Screens */
 .screen {
   display: none;
   height: 100%;
@@ -26,11 +25,10 @@ html, body {
 
 #intro { display: flex; }
 
-/* Button (Arrow + Next) */
 .btn {
-  font-size: 8vw;
-  padding: 4vw 6vw;
-  border-radius: 50%;
+  font-size: 6vw;
+  padding: 4vw 8vw;
+  border-radius: 20px;
   border: none;
   background: white;
   cursor: pointer;
@@ -38,21 +36,18 @@ html, body {
   transition: all 0.1s;
 }
 
-/* Press effect */
 .btn:active {
   box-shadow: 0 2px #666;
   transform: translateY(4px);
 }
 
-/* Text */
 .text {
-  font-size: 6vw;
+  font-size: 5.5vw;
   max-width: 90%;
   word-wrap: break-word;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-/* Cursor */
 .cursor {
   border-right: 2px solid red;
   animation: blink 1s infinite;
@@ -66,41 +61,43 @@ html, body {
 
 <body>
 
-<!-- 🔹 Screen 1 -->
+<!-- Screen 1 -->
 <div id="intro" class="screen">
-  <button class="btn" onclick="goToLetter()">➜</button>
+  <button class="btn" onclick="goToLetter()">Press ❤️</button>
 </div>
 
-<!-- 🔹 Screen 2 (Love Letter) -->
+<!-- Screen 2 -->
 <div id="letter" class="screen">
   <div id="letterText" class="text"></div>
-  <button class="btn" onclick="goToFinal()">➜</button>
+  <button class="btn" onclick="goToFinal()">Press ❤️</button>
 </div>
 
-<!-- 🔹 Screen 3 (Final) -->
+<!-- Screen 3 -->
 <div id="final" class="screen">
   <div id="line1" class="text"></div>
   <div id="line2" class="text"></div>
 </div>
 
-<!-- 🎶 Sounds -->
+<!-- 🎶 Music -->
 <audio id="bgMusic" loop>
   <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
+<!-- 🔊 Click Sound -->
 <audio id="clickSound">
   <source src="click.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-// ---------- NAVIGATION ----------
+// click sound
 function playClick() {
   document.getElementById("clickSound").play();
 }
 
+// Screen change
 function goToLetter() {
-  playClick();
+  playClick(); // ✔️ only here
   document.getElementById("intro").style.display = "none";
   document.getElementById("letter").style.display = "flex";
 
@@ -108,15 +105,15 @@ function goToLetter() {
   typeLetter();
 }
 
+// ❌ NO click sound here
 function goToFinal() {
-  playClick();
   document.getElementById("letter").style.display = "none";
   document.getElementById("final").style.display = "flex";
 
   typeFinal();
 }
 
-// ---------- TYPEWRITER ----------
+// typing
 function typeText(element, text, speed, callback) {
   let i = 0;
   element.classList.add("cursor");
@@ -134,14 +131,14 @@ function typeText(element, text, speed, callback) {
   typing();
 }
 
-// ---------- LOVE LETTER ----------
+// love letter
 function typeLetter() {
-  const text = "Mujhe pata nahi kaise bolu... par tu meri life ka sabse special part hai. Jab tu hasta hai na, sab kuch perfect lagta hai. Tu sirf meri girlfriend nahi, meri best friend, meri khushi aur meri duniya hai. Happy Birthday ❤️";
+  const text = "Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
 
-  typeText(document.getElementById("letterText"), text, 40);
+  typeText(document.getElementById("letterText"), text, 35);
 }
 
-// ---------- FINAL SCREEN ----------
+// final text
 function typeFinal() {
   typeText(document.getElementById("line1"), "Happy Birthday 🎂", 80, () => {
     typeText(document.getElementById("line2"), "Mele Panda 🫂💖", 80);
