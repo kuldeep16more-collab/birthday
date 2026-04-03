@@ -80,7 +80,7 @@ html, body {
   100% { transform: translateY(-100vh); opacity:0; }
 }
 
-/* 🎂 NEW CAKE CSS (ADDED ONLY) */
+/* 🎂 Cake */
 .cake {
   font-size: 20vw;
   position: relative;
@@ -88,7 +88,8 @@ html, body {
 
 .candle {
   position: absolute;
-  top: -20px;
+  top: -35px;
+  transform: translateX(-50%);
   font-size: 5vw;
   cursor: pointer;
 }
@@ -137,11 +138,10 @@ html, body {
 <!-- Screen 5 -->
 <div id="end" class="screen">
   <div id="endText" class="text"></div>
-  <!-- ✅ ONLY THIS BUTTON ADDED -->
-  <button id="btn5" class="btn showBtn" onclick="goToMagic()">Jaaduu ✨</button>
+  <button id="btn5" class="btn" onclick="goToMagic()">Jaaduu ✨</button>
 </div>
 
-<!-- 🎂 NEW SCREEN (ADDED ONLY) -->
+<!-- Screen 6 (NEW) -->
 <div id="magic" class="screen">
   <div class="cake">🎂
     <div class="candle" style="left:30%" onclick="blow(this)">🕯️</div>
@@ -149,7 +149,7 @@ html, body {
     <div class="candle" style="left:70%" onclick="blow(this)">🕯️</div>
   </div>
 
-  <div class="text">tap on candles to blow</div>
+  <div class="text" style="margin-top: 40px;">tap on candles to blow</div>
 </div>
 
 <!-- Sounds -->
@@ -201,7 +201,6 @@ function goToEnd(){
   typeEnd();
 }
 
-/* ✅ NEW NAVIGATION FUNCTION */
 function goToMagic(){
   clickSound();
   switchScreen("end","magic");
@@ -258,7 +257,7 @@ btn4.classList.add("showBtn");
 function typeEnd(){
 let text="I Love You So Much ❤️\nTu meri life ka sabse important part hai.\nMain bas itna chahta hu ki tu hamesha smile karti rahe.\nMain hamesha tere saath rahunga.\nyou are my forever 💖";
 
-typeText(endText,text,60,true);
+typeText(endText,text,60,true,()=>{btn5.classList.add("showBtn");});
 startHearts();
 }
 
@@ -275,12 +274,12 @@ setTimeout(()=>h.remove(),6000);
 },300);
 }
 
-/* 🎂 CANDLE BLOW */
+// 🎂 candle blow
 function blow(el){
   el.innerHTML="";
 }
 
-/* 🎊 SPRINKLES */
+// 🎊 sprinkles
 function startSprinkles(){
 setInterval(()=>{
 let s=document.createElement("div");
