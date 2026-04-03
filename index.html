@@ -13,9 +13,8 @@ html, body {
   background: #ffb6c1;
 }
 
-/* FIXED SCREEN */
 .screen {
-  display: none; /* 👈 important fix */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -25,14 +24,9 @@ html, body {
   align-items: center;
   flex-direction: column;
   text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
-/* only first visible */
-#intro {
-  display: flex;
-}
+#intro { display: flex; }
 
 /* Button */
 .btn {
@@ -57,7 +51,6 @@ html, body {
 
 /* Text */
 .text {
-  display: inline-block;
   font-size: 5.5vw;
   max-width: 90%;
   line-height: 1.6;
@@ -74,52 +67,50 @@ html, body {
   50% { border-color: transparent; }
 }
 
-/* Hearts */
-.heart {
+/* 🎆 FIREWORKS */
+.firework {
   position: fixed;
-  bottom: -10px;
-  animation: floatUp 6s linear infinite;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
 }
 
-@keyframes floatUp {
-  0% { transform: translateY(0); opacity:1; }
-  100% { transform: translateY(-100vh); opacity:0; }
+@keyframes explode {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(15);
+    opacity: 0;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Screen 1 -->
 <div id="intro" class="screen">
   <button class="btn" style="opacity:1" onclick="goToLetter()">Press ❤️</button>
 </div>
 
-<!-- Screen 2 -->
 <div id="letter" class="screen">
   <div id="letterText" class="text"></div>
   <button id="btn2" class="btn" onclick="goToMemories()">Press ❤️</button>
 </div>
 
-<!-- Screen 3 -->
 <div id="memory" class="screen">
   <div id="memoryText" class="text"></div>
   <button id="btn3" class="btn" onclick="goToFinal()">Press ❤️</button>
 </div>
 
-<!-- Screen 4 -->
+<!-- 🎉 FINAL SCREEN -->
 <div id="final" class="screen">
   <div id="line1" class="text"></div>
   <div id="line2" class="text"></div>
-  <button id="btn4" class="btn" onclick="goToEnd()">One Last Thing ❤️</button>
 </div>
 
-<!-- Screen 5 -->
-<div id="end" class="screen">
-  <div id="endText" class="text"></div>
-</div>
-
-<!-- Sounds -->
 <audio id="music" loop>
   <source src="birthday.mp3" type="audio/mpeg">
 </audio>
@@ -158,14 +149,10 @@ function goToFinal(){
   clickSound();
   switchScreen("memory","final");
   typeFinal();
+  startFireworks(); // 🎆 start here
 }
 
-function goToEnd(){
-  clickSound();
-  switchScreen("final","end");
-  typeEnd();
-}
-
+// typing
 function typeText(el,text,speed,cursor,cb){
   let i=0;
   el.innerHTML="";
@@ -186,42 +173,35 @@ function typeText(el,text,speed,cursor,cb){
 }
 
 function typeLetter(){
-let text="Mujhe pata nahi kaise bolu... par tu meri life ka sabse beautiful part hai.\nTu jab smile karti hai na, sab kuch perfect lagta hai.\nTeri awaaz, teri baatein, sab kuch mere din ko special bana deta hai.\nKabhi kabhi bas tujhe yaad karke hi smile aa jati hai.\nTu meri khushi hai, meri aadat hai, meri duniya hai.\nAur main bas itna chahta hu ki tu hamesha khush rahe.\nMain hamesha tere saath rahu, har situation me.\nHappy Birthday meri jaan ❤️";
+let text="Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
 
 typeText(letterText,text,35,false,()=>{btn2.classList.add("showBtn");});
 }
 
 function typeMemories(){
-let text="Har moment jo tere saath spend kiya hai na... wo mere liye treasure hai.\nTere saath hasi, baatein, chhoti chhoti fights bhi special lagti hai.\nTu mere life ka wo part hai jisko main kabhi lose nahi karna chahta.\nTere saath har memory ek story jaisi lagti hai.\nAur main chahta hu aise hi aur hazaar memories banaye.\nTu mere liye sirf ek person nahi, ek feeling hai.\nAur wo feeling mujhe duniya ki sabse best lagti hai 💖";
+let text="Har moment jo tere saath spend kiya hai na... wo mere liye treasure hai.\nTere saath hasi, baatein sab kuch special hai.\nTu mere life ka sabse important part hai 💖";
 
 typeText(memoryText,text,35,false,()=>{btn3.classList.add("showBtn");});
 }
 
 function typeFinal(){
 typeText(line1,"Happy Birthday 🎂",80,true,()=>{
-typeText(line2,"Mele Panda 🫂💖",80,true,()=>{
-btn4.classList.add("showBtn");
-});
+typeText(line2,"Mele Panda 🫂💖",80,true);
 });
 }
 
-function typeEnd(){
-let text="I Love You So Much ❤️\nTu meri life ka sabse important part hai.\nMain bas itna chahta hu ki tu hamesha smile karti rahe.\nMain hamesha tere saath rahunga, har waqt.\nTu meri forever hai 💖";
+// 🎆 FIREWORKS FUNCTION
+function startFireworks(){
+  setInterval(()=>{
+    let f=document.createElement("div");
+    f.className="firework";
+    f.style.left=Math.random()*100+"vw";
+    f.style.top=Math.random()*100+"vh";
+    f.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(f);
 
-typeText(endText,text,60,true);
-startHearts();
-}
-
-function startHearts(){
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.fontSize=(15+Math.random()*25)+"px";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),6000);
-},300);
+    setTimeout(()=>f.remove(),1000);
+  },300);
 }
 
 </script>
