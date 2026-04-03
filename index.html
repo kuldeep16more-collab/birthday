@@ -2,7 +2,42 @@
 <html>
 <head>
 <title>Happy Birthday ❤️</title>
+
 <style>
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffb6c1;
+  font-family: Arial;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: red;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+</style>
+
+</head>
+
 <body>
 
 <div class="container">
@@ -11,31 +46,6 @@
   <button onclick="showMessage()">Click Me ❤️</button>
   <p id="msg"></p>
 </div>
-
-</body>
-h1 {
-  margin-top: 100px;
-  color: red;
-}
-button {
-  padding: 10px 20px;
-  font-size: 18px;
-}
-</style>
-  .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-</head>
-<body>
-
-<h1>Happy Birthday Deepika 🎂❤️</h1>
-<p>You are my everything 💖</p>
-
-<button onclick="showMessage()">Click Me ❤️</button>
-
-<p id="msg"></p>
 
 <script>
 function showMessage() {
