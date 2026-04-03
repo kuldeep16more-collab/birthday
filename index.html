@@ -25,6 +25,7 @@ html, body {
 
 #intro { display: flex; }
 
+/* Button */
 .btn {
   font-size: 6vw;
   padding: 4vw 8vw;
@@ -46,14 +47,17 @@ html, body {
   transform: translateY(4px);
 }
 
+/* Text */
 .text {
+  display: inline-block;
   font-size: 5.5vw;
   max-width: 90%;
   word-wrap: break-word;
   margin-bottom: 40px;
+  line-height: 1.4;
 }
 
-/* Cursor (same for both screens) */
+/* Cursor FIX */
 .cursor {
   border-right: 2px solid red;
   animation: blink 1s infinite;
@@ -84,20 +88,24 @@ html, body {
   <div id="line2" class="text"></div>
 </div>
 
+<!-- Music -->
 <audio id="bgMusic" loop>
   <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
+<!-- Click -->
 <audio id="clickSound">
   <source src="click.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
+// Click sound
 function playClick() {
   document.getElementById("clickSound").play();
 }
 
+// Navigation
 function goToLetter() {
   playClick();
   document.getElementById("intro").style.display = "none";
@@ -114,20 +122,18 @@ function goToFinal() {
   typeFinal();
 }
 
-// 🔥 PERFECT TYPE FUNCTION
+// 🔥 PERFECT TYPEWRITER
 function typeText(element, text, speed, callback) {
   let i = 0;
-
-  element.innerHTML = ""; // reset
+  element.innerHTML = "";
   element.classList.add("cursor");
 
   function typing() {
-    if (i < text.length) {
-      element.innerHTML += text.charAt(i);
+    if (i <= text.length) {
+      element.innerHTML = text.substring(0, i);
       i++;
       setTimeout(typing, speed);
     } else {
-      // 👇 SAME clean removal as final screen
       element.classList.remove("cursor");
       element.style.borderRight = "none";
 
@@ -137,7 +143,7 @@ function typeText(element, text, speed, callback) {
   typing();
 }
 
-// love letter
+// Love letter
 function typeLetter() {
   const text = "Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
 
@@ -146,7 +152,7 @@ function typeLetter() {
   });
 }
 
-// final
+// Final
 function typeFinal() {
   typeText(document.getElementById("line1"), "Happy Birthday 🎂", 80, () => {
     typeText(document.getElementById("line2"), "Mele Panda 🫂💖", 80);
