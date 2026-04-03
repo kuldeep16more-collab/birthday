@@ -3,6 +3,8 @@
 <head>
 <title>Happy Birthday ❤️</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 html, body {
   height: 100%;
@@ -24,8 +26,8 @@ html, body {
 
 /* Arrow button */
 #startBtn {
-  font-size: 50px;
-  padding: 20px 30px;
+  font-size: 8vw; /* responsive */
+  padding: 4vw 6vw;
   border: none;
   border-radius: 50%;
   background: white;
@@ -41,19 +43,23 @@ html, body {
   background-color: #ffb6c1;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 /* Typewriter text */
 h1 {
   color: red;
-  margin-bottom: 40px;
-  border-right: 3px solid red;
+  margin-bottom: 30px;
+  font-size: 7vw; /* responsive */
+  border-right: 2px solid red;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -67,8 +73,10 @@ h1 {
   animation: blink 1s infinite;
 }
 
+/* Button */
 button {
-  padding: 10px 20px;
+  padding: 3vw 5vw;
+  font-size: 4vw;
   border-radius: 10px;
   border: none;
   background: white;
@@ -79,8 +87,8 @@ button {
 .confetti {
   position: fixed;
   top: -20px;
-  width: 6px;
-  height: 14px;
+  width: 4px;
+  height: 10px;
   opacity: 0.8;
 }
 
@@ -120,7 +128,7 @@ button {
 const text = "Happy Birthday Mele Panda 🎂❤️";
 let index = 0;
 
-// Start button
+// Start
 document.getElementById("startBtn").onclick = function() {
   document.getElementById("intro").style.display = "none";
   document.getElementById("main").style.display = "flex";
@@ -130,7 +138,7 @@ document.getElementById("startBtn").onclick = function() {
   startConfetti();
 };
 
-// Typewriter effect
+// Typewriter
 function startTyping() {
   let title = document.getElementById("title");
   title.classList.add("typing");
@@ -139,7 +147,7 @@ function startTyping() {
     if (index < text.length) {
       title.innerHTML += text.charAt(index);
       index++;
-      setTimeout(type, 80); // speed control
+      setTimeout(type, 80);
     } else {
       title.classList.remove("typing");
     }
@@ -152,7 +160,7 @@ function showMessage() {
   document.getElementById("msg").innerHTML = "I love you forever 💕";
 }
 
-// Confetti
+// Confetti (optimized for mobile)
 const colors = ["red", "blue", "green", "yellow"];
 
 function createConfetti() {
@@ -162,12 +170,12 @@ function createConfetti() {
   c.style.left = Math.random() * 100 + "vw";
   c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-  c.style.setProperty('--x1', (Math.random() * 100 - 50) + "px");
-  c.style.setProperty('--x2', (Math.random() * 100 - 50) + "px");
-  c.style.setProperty('--x3', (Math.random() * 100 - 50) + "px");
-  c.style.setProperty('--x4', (Math.random() * 100 - 50) + "px");
+  c.style.setProperty('--x1', (Math.random() * 60 - 30) + "px");
+  c.style.setProperty('--x2', (Math.random() * 60 - 30) + "px");
+  c.style.setProperty('--x3', (Math.random() * 60 - 30) + "px");
+  c.style.setProperty('--x4', (Math.random() * 60 - 30) + "px");
 
-  let duration = 5 + Math.random() * 6;
+  let duration = 4 + Math.random() * 5;
   c.style.animation = `fall ${duration}s linear forwards`;
 
   document.body.appendChild(c);
@@ -177,7 +185,7 @@ function createConfetti() {
 
 function startConfetti() {
   setInterval(() => {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) { // 👈 mobile ke liye kam
       createConfetti();
     }
   }, 300);
