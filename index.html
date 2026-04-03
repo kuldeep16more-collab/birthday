@@ -75,19 +75,13 @@ html, body {
   100% { transform: translateY(-100vh); opacity:0; }
 }
 
-.cake {
-  font-size: 20vw;
-  position: relative;
-}
-
+/* 🔥 BIG CANDLES */
 .candle {
-  position: absolute;
-  top: -35px;
-  transform: translateX(-50%);
-  font-size: 5vw;
+  font-size: 12vw;
   cursor: pointer;
 }
 
+/* sprinkle */
 .sprinkle {
   position: fixed;
   width: 6px;
@@ -129,11 +123,17 @@ html, body {
   <button id="btn5" class="btn" onclick="goToMagic()">Jaaduu ✨</button>
 </div>
 
+<!-- 🔥 MAGIC SCREEN -->
 <div id="magic" class="screen">
-  <div class="cake">🎂
-    <div class="candle" style="left:30%" onclick="blow(this)">🕯️</div>
-    <div class="candle" style="left:50%" onclick="blow(this)">🕯️</div>
-    <div class="candle" style="left:70%" onclick="blow(this)">🕯️</div>
+
+  <!-- triangle candles -->
+  <div>
+    <div class="candle" onclick="blow(this)">🕯️</div>
+  </div>
+
+  <div style="display:flex; gap:40px;">
+    <div class="candle" onclick="blow(this)">🕯️</div>
+    <div class="candle" onclick="blow(this)">🕯️</div>
   </div>
 
   <div class="text" style="margin-top: 40px;">tap on candles to blow</div>
@@ -149,10 +149,8 @@ html, body {
 
 <script>
 
-// 🔥 HEART CONTROL
 let heartInterval;
 
-// sound
 function clickSound(){
   let s=document.getElementById("click");
   s.currentTime=0;
@@ -192,8 +190,7 @@ function goToEnd(){
 function goToMagic(){
   clickSound();
   switchScreen("end","magic");
-
-  stopHearts(); // ❌ hearts stop here
+  stopHearts();
   startSprinkles();
 }
 
@@ -233,8 +230,9 @@ typeText(memoryText,text,35,false,()=>{btn3.classList.add("showBtn");});
 
 function typeFinal(){
 startHearts();
-typeText(line1,"Happy Birthday 🎂",80,true,()=>{
-typeText(line2,"Mele Panda 🫂💖",80,true,()=>{
+/* ❌ cursor removed */
+typeText(line1,"Happy Birthday 🎂",80,false,()=>{
+typeText(line2,"Mele Panda 🫂💖",80,false,()=>{
 btn4.classList.add("showBtn");
 });
 });
@@ -247,7 +245,6 @@ typeText(endText,text,60,true,()=>{btn5.classList.add("showBtn");});
 startHearts();
 }
 
-// ❤️ HEARTS START
 function startHearts(){
   if(heartInterval) return;
   heartInterval = setInterval(()=>{
@@ -261,18 +258,15 @@ function startHearts(){
   },300);
 }
 
-// ❌ HEARTS STOP
 function stopHearts(){
   clearInterval(heartInterval);
   heartInterval = null;
 }
 
-// 🎂 candle
 function blow(el){
   el.innerHTML="";
 }
 
-// 🎊 sprinkles
 function startSprinkles(){
 setInterval(()=>{
 let s=document.createElement("div");
