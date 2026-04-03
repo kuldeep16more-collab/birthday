@@ -34,10 +34,9 @@ html, body {
   cursor: pointer;
   box-shadow: 0 6px #999;
   transition: all 0.2s;
-  opacity: 0; /* 👈 hidden initially */
+  opacity: 0;
 }
 
-/* show animation */
 .showBtn {
   opacity: 1;
 }
@@ -54,6 +53,7 @@ html, body {
   margin-bottom: 40px;
 }
 
+/* Cursor (same for both screens) */
 .cursor {
   border-right: 2px solid red;
   animation: blink 1s infinite;
@@ -84,12 +84,10 @@ html, body {
   <div id="line2" class="text"></div>
 </div>
 
-<!-- Music -->
 <audio id="bgMusic" loop>
   <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Click -->
 <audio id="clickSound">
   <source src="click.mp3" type="audio/mpeg">
 </audio>
@@ -116,9 +114,11 @@ function goToFinal() {
   typeFinal();
 }
 
-// typing function
+// 🔥 PERFECT TYPE FUNCTION
 function typeText(element, text, speed, callback) {
   let i = 0;
+
+  element.innerHTML = ""; // reset
   element.classList.add("cursor");
 
   function typing() {
@@ -127,6 +127,7 @@ function typeText(element, text, speed, callback) {
       i++;
       setTimeout(typing, speed);
     } else {
+      // 👇 SAME clean removal as final screen
       element.classList.remove("cursor");
       element.style.borderRight = "none";
 
@@ -141,7 +142,6 @@ function typeLetter() {
   const text = "Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
 
   typeText(document.getElementById("letterText"), text, 35, () => {
-    // 👉 show button AFTER typing
     document.getElementById("nextBtn").classList.add("showBtn");
   });
 }
