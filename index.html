@@ -75,13 +75,11 @@ html, body {
   100% { transform: translateY(-100vh); opacity:0; }
 }
 
-/* 🔥 BIG CANDLES */
 .candle {
   font-size: 12vw;
   cursor: pointer;
 }
 
-/* sprinkle */
 .sprinkle {
   position: fixed;
   width: 6px;
@@ -94,7 +92,6 @@ html, body {
   100% { transform: translateY(100vh) rotate(360deg); }
 }
 
-/* 💨 SMOKE */
 .smoke {
   position: absolute;
   font-size: 5vw;
@@ -106,7 +103,6 @@ html, body {
   100% { transform: translateY(-60px); opacity: 0; }
 }
 
-/* 🎉 WISH POPUP (GLOW + ONE LINE) */
 .wish {
   position: fixed;
   top: 40%;
@@ -123,7 +119,6 @@ html, body {
   100% { transform: translate(-50%, -50%) scale(1); }
 }
 
-/* ✨ GLOW EFFECT */
 @keyframes glow {
   0% { text-shadow: 0 0 5px white, 0 0 10px pink; }
   100% { text-shadow: 0 0 15px white, 0 0 25px hotpink; }
@@ -158,9 +153,7 @@ html, body {
   <button id="btn5" class="btn" onclick="goToMagic()">Jaaduu ✨</button>
 </div>
 
-<!-- 🔥 MAGIC SCREEN -->
 <div id="magic" class="screen">
-
   <div>
     <div class="candle" onclick="blow(this)">🕯️</div>
   </div>
@@ -229,7 +222,6 @@ function goToMagic(){
   startSprinkles();
 }
 
-// typing
 function typeText(el,text,speed,cursor,cb){
   let i=0;
   el.innerHTML="";
@@ -258,7 +250,9 @@ typeText(letterText,text,35,false,()=>{btn2.classList.add("showBtn");});
 
 function typeMemories(){
 startHearts();
+
 let text="Har moment jo tere saath spend kiya hai na... wo mere liye treasure hai.\nTere saath rehna, tere sath roz baatein karna sab kuch special hai.\nTu mere life ka sabse.\nimportant part hai 💖";
+
 typeText(memoryText,text,35,false,()=>{btn3.classList.add("showBtn");});
 }
 
