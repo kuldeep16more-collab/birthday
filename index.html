@@ -18,7 +18,6 @@ body {
   font-family: Arial;
 }
 
-/* Center content */
 .container {
   display: flex;
   flex-direction: column;
@@ -38,7 +37,7 @@ button {
   cursor: pointer;
 }
 
-/* 🎊 Confetti */
+/* Confetti */
 .confetti {
   position: fixed;
   top: -20px;
@@ -47,23 +46,12 @@ button {
   opacity: 0.8;
 }
 
-/* Falling animation */
 @keyframes fall {
-  0% {
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateX(var(--x1)) translateY(25vh) rotate(90deg);
-  }
-  50% {
-    transform: translateX(var(--x2)) translateY(50vh) rotate(180deg);
-  }
-  75% {
-    transform: translateX(var(--x3)) translateY(75vh) rotate(270deg);
-  }
-  100% {
-    transform: translateX(var(--x4)) translateY(110vh) rotate(360deg);
-  }
+  0% { transform: translateX(0) translateY(0) rotate(0deg); }
+  25% { transform: translateX(var(--x1)) translateY(25vh) rotate(90deg); }
+  50% { transform: translateX(var(--x2)) translateY(50vh) rotate(180deg); }
+  75% { transform: translateX(var(--x3)) translateY(75vh) rotate(270deg); }
+  100% { transform: translateX(var(--x4)) translateY(110vh) rotate(360deg); }
 }
 </style>
 
@@ -73,23 +61,25 @@ button {
 
 <div class="container">
   <h1>Happy Birthday Mele Panda 🎂❤️</h1>
-  <button onclick="showMessage()">Click Me ❤️</button>
+  <button onclick="startAll()">Click Me ❤️</button>
   <p id="msg"></p>
 </div>
 
-<!-- Music -->
-<audio autoplay loop>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid" type="audio/midi">
+<!-- 🎶 Music -->
+<audio id="music" loop>
+  <source src="https://www.soundjay.com/human/sounds/happy-birthday-song-01.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-function showMessage() {
+function startAll() {
   document.getElementById("msg").innerHTML = "I love you forever 💕";
+  
+  // 🎶 Play music
+  document.getElementById("music").play();
 }
 
 const colors = ["red", "blue", "green", "yellow"];
 
-// 🎊 Function to create ONE confetti
 function createConfetti() {
   let c = document.createElement("div");
   c.className = "confetti";
@@ -107,18 +97,17 @@ function createConfetti() {
 
   document.body.appendChild(c);
 
-  // remove after animation (clean performance)
   setTimeout(() => {
     c.remove();
   }, duration * 1000);
 }
 
-// 🎯 CONTINUOUS FLOW
+// continuous confetti
 setInterval(() => {
   for (let i = 0; i < 5; i++) {
     createConfetti();
   }
-}, 300); // har 0.3 sec me naye confetti
+}, 300);
 </script>
 
 </body>
