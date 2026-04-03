@@ -13,15 +13,14 @@ html, body {
   background: #ffb6c1;
 }
 
-/* PERFECT CENTER FIX */
+/* FIXED SCREEN */
 .screen {
-  display: none;
+  display: none; /* 👈 important fix */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -30,7 +29,10 @@ html, body {
   box-sizing: border-box;
 }
 
-#intro { display: flex; }
+/* only first visible */
+#intro {
+  display: flex;
+}
 
 /* Button */
 .btn {
@@ -128,14 +130,12 @@ html, body {
 
 <script>
 
-// sound
 function clickSound(){
   let s=document.getElementById("click");
   s.currentTime=0;
   s.play();
 }
 
-// navigation
 function switchScreen(hide,show){
   document.getElementById(hide).style.display="none";
   document.getElementById(show).style.display="flex";
@@ -166,7 +166,6 @@ function goToEnd(){
   typeEnd();
 }
 
-// typing
 function typeText(el,text,speed,cursor,cb){
   let i=0;
   el.innerHTML="";
@@ -186,25 +185,18 @@ function typeText(el,text,speed,cursor,cb){
   t();
 }
 
-// 💌 LOVE LETTER (EXTENDED)
 function typeLetter(){
-let text="Mujhe pata nahi kaise bolu... par tu meri life ka sabse beautiful part hai.\nTu jab smile karti hai na, sach me lagta hai sab kuch perfect hai.\nTeri awaaz, teri baatein, sab kuch mere din ko special bana deta hai.\nKabhi kabhi bas tujhe yaad karke hi smile aa jati hai.\nTu meri khushi hai, meri aadat hai, meri duniya hai.\nAur main bas itna chahta hu ki tu hamesha khush rahe.\nMain hamesha tere saath rahu, har situation me.\nHappy Birthday meri jaan ❤️";
+let text="Mujhe pata nahi kaise bolu... par tu meri life ka sabse beautiful part hai.\nTu jab smile karti hai na, sab kuch perfect lagta hai.\nTeri awaaz, teri baatein, sab kuch mere din ko special bana deta hai.\nKabhi kabhi bas tujhe yaad karke hi smile aa jati hai.\nTu meri khushi hai, meri aadat hai, meri duniya hai.\nAur main bas itna chahta hu ki tu hamesha khush rahe.\nMain hamesha tere saath rahu, har situation me.\nHappy Birthday meri jaan ❤️";
 
-typeText(letterText,text,35,false,()=>{
-btn2.classList.add("showBtn");
-});
+typeText(letterText,text,35,false,()=>{btn2.classList.add("showBtn");});
 }
 
-// 💭 MEMORIES (EXTENDED)
 function typeMemories(){
 let text="Har moment jo tere saath spend kiya hai na... wo mere liye treasure hai.\nTere saath hasi, baatein, chhoti chhoti fights bhi special lagti hai.\nTu mere life ka wo part hai jisko main kabhi lose nahi karna chahta.\nTere saath har memory ek story jaisi lagti hai.\nAur main chahta hu aise hi aur hazaar memories banaye.\nTu mere liye sirf ek person nahi, ek feeling hai.\nAur wo feeling mujhe duniya ki sabse best lagti hai 💖";
 
-typeText(memoryText,text,35,false,()=>{
-btn3.classList.add("showBtn");
-});
+typeText(memoryText,text,35,false,()=>{btn3.classList.add("showBtn");});
 }
 
-// 🎉 FINAL
 function typeFinal(){
 typeText(line1,"Happy Birthday 🎂",80,true,()=>{
 typeText(line2,"Mele Panda 🫂💖",80,true,()=>{
@@ -213,7 +205,6 @@ btn4.classList.add("showBtn");
 });
 }
 
-// 💖 END
 function typeEnd(){
 let text="I Love You So Much ❤️\nTu meri life ka sabse important part hai.\nMain bas itna chahta hu ki tu hamesha smile karti rahe.\nMain hamesha tere saath rahunga, har waqt.\nTu meri forever hai 💖";
 
@@ -221,7 +212,6 @@ typeText(endText,text,60,true);
 startHearts();
 }
 
-// hearts
 function startHearts(){
 setInterval(()=>{
 let h=document.createElement("div");
