@@ -26,7 +26,7 @@ html, body {
 
 /* Arrow button */
 #startBtn {
-  font-size: 8vw; /* responsive */
+  font-size: 8vw;
   padding: 4vw 6vw;
   border: none;
   border-radius: 50%;
@@ -54,14 +54,15 @@ html, body {
   text-align: center;
 }
 
-/* Typewriter text */
+/* Typewriter text FIXED */
 h1 {
   color: red;
   margin-bottom: 30px;
-  font-size: 7vw; /* responsive */
+  font-size: 6vw;   /* 👈 thoda chhota */
   border-right: 2px solid red;
-  white-space: nowrap;
-  overflow: hidden;
+  white-space: normal;  /* 👈 wrap allow */
+  word-break: break-word;
+  max-width: 90%;
 }
 
 /* blinking cursor */
@@ -160,7 +161,7 @@ function showMessage() {
   document.getElementById("msg").innerHTML = "I love you forever 💕";
 }
 
-// Confetti (optimized for mobile)
+// Confetti
 const colors = ["red", "blue", "green", "yellow"];
 
 function createConfetti() {
@@ -185,7 +186,7 @@ function createConfetti() {
 
 function startConfetti() {
   setInterval(() => {
-    for (let i = 0; i < 3; i++) { // 👈 mobile ke liye kam
+    for (let i = 0; i < 3; i++) {
       createConfetti();
     }
   }, 300);
