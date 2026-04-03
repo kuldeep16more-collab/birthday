@@ -106,7 +106,7 @@ html, body {
   100% { transform: translateY(-60px); opacity: 0; }
 }
 
-/* 🎉 WISH POPUP */
+/* 🎉 WISH POPUP (GLOW + ONE LINE) */
 .wish {
   position: fixed;
   top: 40%;
@@ -114,12 +114,19 @@ html, body {
   transform: translate(-50%, -50%);
   font-size: 7vw;
   color: white;
-  animation: pop 1s ease;
+  animation: pop 1s ease, glow 1.5s infinite alternate;
+  white-space: nowrap;
 }
 
 @keyframes pop {
   0% { transform: translate(-50%, -50%) scale(0); }
   100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ✨ GLOW EFFECT */
+@keyframes glow {
+  0% { text-shadow: 0 0 5px white, 0 0 10px pink; }
+  100% { text-shadow: 0 0 15px white, 0 0 25px hotpink; }
 }
 </style>
 </head>
@@ -163,7 +170,7 @@ html, body {
     <div class="candle" onclick="blow(this)">🕯️</div>
   </div>
 
-  <div class="text" style="margin-top: 40px;">tap on candles to blow</div>
+  <div id="tapText" class="text" style="margin-top: 40px;">tap on candles to blow</div>
 </div>
 
 <audio id="music" loop>
@@ -290,7 +297,6 @@ function stopHearts(){
   heartInterval = null;
 }
 
-// 🔥 candle blow + smoke
 function blow(el){
   el.innerHTML = "";
 
@@ -302,19 +308,18 @@ function blow(el){
   candlesLeft--;
 
   if(candlesLeft === 0){
+    document.getElementById("tapText").style.display="none";
     showWish();
   }
 }
 
-// 🎉 wish popup
 function showWish(){
   let w = document.createElement("div");
   w.className = "wish";
-  w.innerHTML = " I Love You My Girl ✨ ";
+  w.innerHTML = "I Love You My Girl ✨";
   document.body.appendChild(w);
 }
 
-// 🎊 sprinkles
 function startSprinkles(){
 setInterval(()=>{
 let s=document.createElement("div");
