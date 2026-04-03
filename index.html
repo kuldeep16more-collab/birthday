@@ -55,15 +55,6 @@ html, body {
   margin-bottom: 20px;
 }
 
-.cursor {
-  border-right: 2px solid red;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-
 .heart {
   position: fixed;
   bottom: -10px;
@@ -222,10 +213,10 @@ function goToMagic(){
   startSprinkles();
 }
 
+/* ✅ CURSOR REMOVED */
 function typeText(el,text,speed,cursor,cb){
   let i=0;
   el.innerHTML="";
-  if(cursor) el.classList.add("cursor");
 
   function t(){
     if(i<=text.length){
@@ -233,8 +224,6 @@ function typeText(el,text,speed,cursor,cb){
       i++;
       setTimeout(t,speed);
     } else {
-      el.classList.remove("cursor");
-      el.style.borderRight="none";
       if(cb) cb();
     }
   }
@@ -268,7 +257,7 @@ btn4.classList.add("showBtn");
 function typeEnd(){
 let text="I Love You So Much ❤️\nTu meri life ka sabse important part hai.\nMain bas itna chahta hu ki tu hamesha smile karti rahe.\nor hum hamesha sath rahe.\nyou are my forever 💖";
 
-typeText(endText,text,60,true,()=>{btn5.classList.add("showBtn");});
+typeText(endText,text,60,false,()=>{btn5.classList.add("showBtn");});
 startHearts();
 }
 
