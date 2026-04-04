@@ -5,7 +5,64 @@
 <title>For My Panda ❤️</title>
 
 <style>
-/* SAME OLD CSS ABOVE — NO CHANGE */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial;
+  background: #ffb6c1;
+}
+
+.screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+#intro { display: flex; }
+
+.btn {
+  font-size: 6vw;
+  padding: 4vw 8vw;
+  border-radius: 20px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 6px #999;
+  transition: all 0.2s;
+  opacity: 0;
+  margin-top: 20px;
+}
+
+.showBtn { opacity: 1; }
+
+.text {
+  font-size: 5.5vw;
+  max-width: 90%;
+}
+
+.candle {
+  font-size: 12vw;
+  cursor: pointer;
+}
+
+.smoke {
+  position: absolute;
+  font-size: 5vw;
+  animation: smokeUp 1.5s ease-out forwards;
+}
+
+@keyframes smokeUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
 
 /* 🎂 cake */
 .cakeBox {
@@ -18,14 +75,11 @@
 
 .cake {
   font-size: 20vw;
-  transition: transform 1s;
 }
 
-/* 🔪 knife */
 .knife {
   position: absolute;
   font-size: 10vw;
-  top: -20px;
   left: 50%;
   transform: translateX(-50%);
   animation: cut 1.5s ease forwards;
@@ -36,18 +90,60 @@
   50% { top: 20px; }
   100% { top: -40px; }
 }
+
+/* 💖 wish */
+.wish {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 7vw;
+  color: white;
+}
+
+/* 🎉 confetti */
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 14px;
+  top: -10px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(100vh) rotate(720deg); }
+}
 </style>
 </head>
 
 <body>
 
-<!-- ⚠️ SAME HTML AS YOUR ORIGINAL (no change above) -->
+<div id="intro" class="screen">
+  <button class="btn" style="opacity:1" onclick="goToMagic()">Start ❤️</button>
+</div>
+
+<div id="magic" class="screen">
+  <div>
+    <div class="candle" onclick="blow(this)">🕯️</div>
+  </div>
+
+  <div style="display:flex; gap:40px;">
+    <div class="candle" onclick="blow(this)">🕯️</div>
+    <div class="candle" onclick="blow(this)">🕯️</div>
+  </div>
+
+  <div id="tapText" class="text">tap candles 🎂</div>
+</div>
 
 <script>
 
-/* SAME JS ABOVE */
+let candlesLeft = 3;
 
-/* 🎂 UPDATED BLOW */
+function goToMagic(){
+  document.getElementById("intro").style.display="none";
+  document.getElementById("magic").style.display="flex";
+}
+
 function blow(el){
   if(el.classList.contains("blown")) return;
 
@@ -59,9 +155,7 @@ function blow(el){
   smoke.innerHTML = "💨";
   el.appendChild(smoke);
 
-  if(candlesLeft > 0){
-    candlesLeft--;
-  }
+  candlesLeft--;
 
   if(candlesLeft === 0){
     document.getElementById("tapText").style.display="none";
@@ -69,7 +163,6 @@ function blow(el){
   }
 }
 
-/* 🎂 cake animation */
 function showCake(){
   let box = document.createElement("div");
   box.className = "cakeBox";
@@ -86,20 +179,30 @@ function showCake(){
   box.appendChild(knife);
   document.body.appendChild(box);
 
-  // after cut → show wish
   setTimeout(()=>{
     box.remove();
     showWish();
-    blastConfetti();
-
-    if(navigator.vibrate){
-      navigator.vibrate([200,100,200]);
-    }
-
+    confetti();
   },1800);
 }
 
-/* SAME showWish + confetti functions */
+function showWish(){
+  let w = document.createElement("div");
+  w.className = "wish";
+  w.innerHTML = "I Love You My Girl 💖";
+  document.body.appendChild(w);
+}
+
+function confetti(){
+  for(let i=0;i<60;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
 
 </script>
 
