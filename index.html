@@ -213,6 +213,7 @@ function goToMagic(){
   startSprinkles();
 }
 
+/* typing */
 function typeText(el,text,speed,cursor,cb){
   let i=0;
   el.innerHTML="";
@@ -260,6 +261,7 @@ typeText(endText,text,60,false,()=>{btn5.classList.add("showBtn");});
 startHearts();
 }
 
+/* hearts */
 function startHearts(){
   if(heartInterval) return;
   heartInterval = setInterval(()=>{
@@ -278,7 +280,12 @@ function stopHearts(){
   heartInterval = null;
 }
 
+/* ✅ FIXED BLOW FUNCTION */
 function blow(el){
+  // already blown? ignore
+  if(el.classList.contains("blown")) return;
+
+  el.classList.add("blown");
   el.innerHTML = "";
 
   let smoke = document.createElement("div");
@@ -286,7 +293,9 @@ function blow(el){
   smoke.innerHTML = "💨";
   el.appendChild(smoke);
 
-  candlesLeft--;
+  if(candlesLeft > 0){
+    candlesLeft--;
+  }
 
   if(candlesLeft === 0){
     document.getElementById("tapText").style.display="none";
