@@ -43,14 +43,44 @@ html, body {
 
 .showBtn { opacity: 1; }
 
+.btn:active {
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+
 .text {
   font-size: 5.5vw;
   max-width: 90%;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.heart {
+  position: fixed;
+  bottom: -10px;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity:1; }
+  100% { transform: translateY(-100vh); opacity:0; }
 }
 
 .candle {
   font-size: 12vw;
   cursor: pointer;
+}
+
+.sprinkle {
+  position: fixed;
+  width: 6px;
+  height: 12px;
+  animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(360deg); }
 }
 
 .smoke {
@@ -62,6 +92,26 @@ html, body {
 @keyframes smokeUp {
   0% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(-60px); opacity: 0; }
+}
+
+.wish {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 7vw;
+  color: white;
+  animation: pop 1s ease, glow 1.5s infinite alternate;
+}
+
+@keyframes pop {
+  0% { transform: translate(-50%, -50%) scale(0); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px white, 0 0 10px pink; }
+  100% { text-shadow: 0 0 15px white, 0 0 25px hotpink; }
 }
 
 /* 🎂 cake */
@@ -90,36 +140,34 @@ html, body {
   50% { top: 20px; }
   100% { top: -40px; }
 }
-
-/* 💖 wish */
-.wish {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 7vw;
-  color: white;
-}
-
-/* 🎉 confetti */
-.confetti {
-  position: fixed;
-  width: 8px;
-  height: 14px;
-  top: -10px;
-  animation: fall 3s linear forwards;
-}
-
-@keyframes fall {
-  to { transform: translateY(100vh) rotate(720deg); }
-}
 </style>
 </head>
 
 <body>
 
 <div id="intro" class="screen">
-  <button class="btn" style="opacity:1" onclick="goToMagic()">Start ❤️</button>
+  <button class="btn" style="opacity:1" onclick="goToLetter()">Press ❤️</button>
+</div>
+
+<div id="letter" class="screen">
+  <div id="letterText" class="text"></div>
+  <button id="btn2" class="btn" onclick="goToMemories()">Press ❤️</button>
+</div>
+
+<div id="memory" class="screen">
+  <div id="memoryText" class="text"></div>
+  <button id="btn3" class="btn" onclick="goToFinal()">Press ❤️</button>
+</div>
+
+<div id="final" class="screen">
+  <div id="line1" class="text"></div>
+  <div id="line2" class="text"></div>
+  <button id="btn4" class="btn" onclick="goToEnd()">One Last Thing ❤️</button>
+</div>
+
+<div id="end" class="screen">
+  <div id="endText" class="text"></div>
+  <button id="btn5" class="btn" onclick="goToMagic()">Jaaduu ✨</button>
 </div>
 
 <div id="magic" class="screen">
@@ -132,48 +180,151 @@ html, body {
     <div class="candle" onclick="blow(this)">🕯️</div>
   </div>
 
-  <div id="tapText" class="text">tap candles 🎂</div>
+  <div id="tapText" class="text" style="margin-top: 40px;">tap on candles to blow</div>
 </div>
+
+<audio id="music" loop>
+  <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="click">
+  <source src="click.mp3">
+</audio>
 
 <script>
 
+let heartInterval;
 let candlesLeft = 3;
 
-function goToMagic(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("magic").style.display="flex";
+function clickSound(){
+  let s=document.getElementById("click");
+  s.currentTime=0;
+  s.play();
 }
 
+function switchScreen(hide,show){
+  document.getElementById(hide).style.display="none";
+  document.getElementById(show).style.display="flex";
+}
+
+function goToLetter(){
+  clickSound();
+  switchScreen("intro","letter");
+  document.getElementById("music").play();
+  typeLetter();
+}
+
+function goToMemories(){
+  clickSound();
+  switchScreen("letter","memory");
+  typeMemories();
+}
+
+function goToFinal(){
+  clickSound();
+  switchScreen("memory","final");
+  typeFinal();
+}
+
+function goToEnd(){
+  clickSound();
+  switchScreen("final","end");
+  typeEnd();
+}
+
+function goToMagic(){
+  clickSound();
+  switchScreen("end","magic");
+  stopHearts();
+  startSprinkles();
+}
+
+function typeText(el,text,speed,cb){
+  let i=0;
+  el.innerHTML="";
+  function t(){
+    if(i<=text.length){
+      el.innerHTML=text.substring(0,i);
+      i++;
+      setTimeout(t,speed);
+    } else {
+      if(cb) cb();
+    }
+  }
+  t();
+}
+
+function typeLetter(){
+startHearts();
+let text="Mujhe pata nahi kaise start karu... ... Happy Birthday ❤️";
+typeText(letterText,text,35,()=>{btn2.classList.add("showBtn");});
+}
+
+function typeMemories(){
+startHearts();
+let text="Har moment jo tere saath spend kiya hai na...";
+typeText(memoryText,text,35,()=>{btn3.classList.add("showBtn");});
+}
+
+function typeFinal(){
+startHearts();
+typeText(line1,"Happy Birthday 🎂",80,()=>{
+typeText(line2,"Mele Panda 🫂💖",80,()=>{
+btn4.classList.add("showBtn");
+});
+});
+}
+
+function typeEnd(){
+let text="I Love You So Much ❤️...";
+typeText(endText,text,60,()=>{btn5.classList.add("showBtn");});
+startHearts();
+}
+
+function startHearts(){
+  if(heartInterval) return;
+  heartInterval = setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },300);
+}
+
+function stopHearts(){
+  clearInterval(heartInterval);
+  heartInterval = null;
+}
+
+/* ✅ FIXED + CAKE */
 function blow(el){
   if(el.classList.contains("blown")) return;
 
   el.classList.add("blown");
-  el.innerHTML = "";
-
-  let smoke = document.createElement("div");
-  smoke.className = "smoke";
-  smoke.innerHTML = "💨";
-  el.appendChild(smoke);
+  el.innerHTML="💨";
 
   candlesLeft--;
 
-  if(candlesLeft === 0){
+  if(candlesLeft===0){
     document.getElementById("tapText").style.display="none";
     showCake();
   }
 }
 
+/* 🎂 cake */
 function showCake(){
-  let box = document.createElement("div");
-  box.className = "cakeBox";
+  let box=document.createElement("div");
+  box.className="cakeBox";
 
-  let cake = document.createElement("div");
-  cake.className = "cake";
-  cake.innerHTML = "🎂";
+  let cake=document.createElement("div");
+  cake.className="cake";
+  cake.innerHTML="🎂";
 
-  let knife = document.createElement("div");
-  knife.className = "knife";
-  knife.innerHTML = "🔪";
+  let knife=document.createElement("div");
+  knife.className="knife";
+  knife.innerHTML="🔪";
 
   box.appendChild(cake);
   box.appendChild(knife);
@@ -182,26 +333,25 @@ function showCake(){
   setTimeout(()=>{
     box.remove();
     showWish();
-    confetti();
   },1800);
 }
 
 function showWish(){
-  let w = document.createElement("div");
-  w.className = "wish";
-  w.innerHTML = "I Love You My Girl 💖";
+  let w=document.createElement("div");
+  w.className="wish";
+  w.innerHTML="I Love You My Girl 💖";
   document.body.appendChild(w);
 }
 
-function confetti(){
-  for(let i=0;i<60;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
-  }
+function startSprinkles(){
+setInterval(()=>{
+let s=document.createElement("div");
+s.className="sprinkle";
+s.style.left=Math.random()*100+"vw";
+s.style.background=`hsl(${Math.random()*360},100%,50%)`;
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),5000);
+},200);
 }
 
 </script>
