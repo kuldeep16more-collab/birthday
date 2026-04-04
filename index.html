@@ -102,6 +102,7 @@ html, body {
   font-size: 7vw;
   color: white;
   animation: pop 1s ease, glow 1.5s infinite alternate;
+  white-space: nowrap;
 }
 
 @keyframes pop {
@@ -112,33 +113,6 @@ html, body {
 @keyframes glow {
   0% { text-shadow: 0 0 5px white, 0 0 10px pink; }
   100% { text-shadow: 0 0 15px white, 0 0 25px hotpink; }
-}
-
-/* 🎂 cake */
-.cakeBox {
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.cake {
-  font-size: 20vw;
-}
-
-.knife {
-  position: absolute;
-  font-size: 10vw;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: cut 1.5s ease forwards;
-}
-
-@keyframes cut {
-  0% { top: -40px; }
-  50% { top: 20px; }
-  100% { top: -40px; }
 }
 </style>
 </head>
@@ -239,9 +213,10 @@ function goToMagic(){
   startSprinkles();
 }
 
-function typeText(el,text,speed,cb){
+function typeText(el,text,speed,cursor,cb){
   let i=0;
   el.innerHTML="";
+
   function t(){
     if(i<=text.length){
       el.innerHTML=text.substring(0,i);
@@ -256,28 +231,32 @@ function typeText(el,text,speed,cb){
 
 function typeLetter(){
 startHearts();
-let text="Mujhe pata nahi kaise start karu... ... Happy Birthday ❤️";
-typeText(letterText,text,35,()=>{btn2.classList.add("showBtn");});
+let text="Mujhe pata nahi kaise start karu... par ek baat sach hai ki jab se tu meri life me aayi hai, sab kuch change ho gaya hai. Tu sirf ek ladki nahi hai, tu meri khushi hai, meri smile ka reason hai. Jab tu baat karti hai na, pura din achha ho jata hai. Kabhi kabhi bas tujhe dekh ke hi smile aa jati hai. Mujhe tere saath rehna, baat karna, sab kuch bohot pasand hai. Tu meri best friend bhi hai aur meri sabse pyari feeling bhi. Main bas itna kehna chahta hu ki tu hamesha khush rahe, aur main hamesha tere saath rahu. Happy Birthday ❤️";
+
+typeText(letterText,text,35,false,()=>{btn2.classList.add("showBtn");});
 }
 
 function typeMemories(){
 startHearts();
-let text="Har moment jo tere saath spend kiya hai na...";
-typeText(memoryText,text,35,()=>{btn3.classList.add("showBtn");});
+
+let text=" Har moment jo tere saath spend kiya hai na... wo mere liye treasure hai.\nTere saath rehna, tere sath roz baatein karna sab kuch special hai.\nTu mere life me.\nsabse important hai 💖 ";
+
+typeText(memoryText,text,35,false,()=>{btn3.classList.add("showBtn");});
 }
 
 function typeFinal(){
 startHearts();
-typeText(line1,"Happy Birthday 🎂",80,()=>{
-typeText(line2,"Mele Panda 🫂💖",80,()=>{
+typeText(line1,"Happy Birthday 🎂",80,false,()=>{
+typeText(line2,"Mele Panda 🫂💖",80,false,()=>{
 btn4.classList.add("showBtn");
 });
 });
 }
 
 function typeEnd(){
-let text="I Love You So Much ❤️...";
-typeText(endText,text,60,()=>{btn5.classList.add("showBtn");});
+let text="I Love You So Much ❤️\nMain bas itna chahta hu ki tu hamesha smile karti rahe.\nor hum hamesha sath rahe.\ni will be your forever 💖";
+
+typeText(endText,text,60,false,()=>{btn5.classList.add("showBtn");});
 startHearts();
 }
 
@@ -288,6 +267,7 @@ function startHearts(){
     h.className="heart";
     h.innerHTML="❤️";
     h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(15+Math.random()*25)+"px";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),6000);
   },300);
@@ -298,48 +278,26 @@ function stopHearts(){
   heartInterval = null;
 }
 
-/* ✅ FIXED + CAKE */
 function blow(el){
-  if(el.classList.contains("blown")) return;
+  el.innerHTML = "";
 
-  el.classList.add("blown");
-  el.innerHTML="💨";
+  let smoke = document.createElement("div");
+  smoke.className = "smoke";
+  smoke.innerHTML = "💨";
+  el.appendChild(smoke);
 
   candlesLeft--;
 
-  if(candlesLeft===0){
+  if(candlesLeft === 0){
     document.getElementById("tapText").style.display="none";
-    showCake();
+    showWish();
   }
 }
 
-/* 🎂 cake */
-function showCake(){
-  let box=document.createElement("div");
-  box.className="cakeBox";
-
-  let cake=document.createElement("div");
-  cake.className="cake";
-  cake.innerHTML="🎂";
-
-  let knife=document.createElement("div");
-  knife.className="knife";
-  knife.innerHTML="🔪";
-
-  box.appendChild(cake);
-  box.appendChild(knife);
-  document.body.appendChild(box);
-
-  setTimeout(()=>{
-    box.remove();
-    showWish();
-  },1800);
-}
-
 function showWish(){
-  let w=document.createElement("div");
-  w.className="wish";
-  w.innerHTML="I Love You My Girl 💖";
+  let w = document.createElement("div");
+  w.className = "wish";
+  w.innerHTML = "I Love You My Girl ✨";
   document.body.appendChild(w);
 }
 
